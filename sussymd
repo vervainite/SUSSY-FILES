@@ -1,0 +1,99 @@
+
+<?php
+$conn = mysqli_connect("localhost", "root", "", "oop_crud");
+
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+$sql = "SELECT * FROM users";
+$result = mysqli_query($conn, $sql);
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Users</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            margin: 50px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        a {
+            text-decoration: none;
+            margin-right: 5px;
+        }
+
+        .edit {
+            color: blue;
+        }
+
+        .remove {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Users</h2>
+
+<a href="create.php">Add User</a>
+
+<br><br>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Lastname</th>
+        <th>Firstname</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Action</th>
+    </tr>
+
+    <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+
+    <tr>
+        <td><?php echo $row['id']; ?></td>
+        <td><?php echo $row['lname']; ?></td>
+        <td><?php echo $row['firstname']; ?></td>
+        <td><?php echo $row['username']; ?></td>
+        <td><?php echo $row['email']; ?></td>
+
+        <td>
+            <a class="edit"
+               href="edit.php?id=<?php echo $row['id']; ?>">
+               edit
+            </a>
+
+            <a class="remove"
+               href="delete.php?id=<?php echo $row['id']; ?>">
+               remove
+            </a>
+        </td>
+    </tr>
+
+    <?php } ?>
+
+</table>
+
+</body>
+</html>
