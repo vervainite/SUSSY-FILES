@@ -1,149 +1,94 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Welcome</title>
     <style>
-        :root {
-            --bg: #f7f7fb; --text: #14142b; --muted: #5c5c7a; --card: rgba(255,255,255,.75);
-            --border: rgba(20,20,43,.08); --accent: #6d5dfc; --accent2: #b44cf5; --shadow: 0 20px 50px -20px rgba(109,93,252,.35);
-        }
-        @@media (prefers-color-scheme: dark) {
-            :root {
-                --bg: #0b0b17; --text: #f1f1fb; --muted: #a0a0c0; --card: rgba(255,255,255,.06);
-                --border: rgba(255,255,255,.1); --shadow: 0 20px 60px -20px rgba(0,0,0,.8);
-            }
-        }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            min-height: 100vh; background: var(--bg); color: var(--text);
-            font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.5; overflow-x: hidden; -webkit-font-smoothing: antialiased;
+            min-height: 100vh; color: #f1f1fb; line-height: 1.5;
+            font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+            background:
+                radial-gradient(620px 420px at 8% 0%, rgba(217,70,239,.38), transparent 60%),
+                radial-gradient(520px 420px at 100% 35%, rgba(34,211,238,.28), transparent 60%),
+                radial-gradient(640px 420px at 40% 100%, rgba(99,102,241,.38), transparent 60%),
+                #07070f;
         }
-        .blob { position: fixed; border-radius: 50%; filter: blur(90px); opacity: .45; z-index: 0; pointer-events: none; }
-        .b1 { width: 420px; height: 420px; background: #6d5dfc; top: -120px; left: -100px; animation: drift 14s ease-in-out infinite; }
-        .b2 { width: 360px; height: 360px; background: #f06bd0; top: 30%; right: -120px; animation: drift 18s ease-in-out infinite reverse; }
-        .b3 { width: 400px; height: 400px; background: #38bdf8; bottom: -160px; left: 30%; opacity: .35; animation: drift 22s ease-in-out infinite; }
-        @@keyframes drift { 0%,100% { transform: translate(0,0); } 50% { transform: translate(40px,30px); } }
-        @@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
-        @@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-
-        .wrap { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
-        header { display: flex; align-items: center; justify-content: space-between; padding: 24px 0; }
-        .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.15rem; text-decoration: none; color: inherit; }
-        .logo { width: 36px; height: 36px; border-radius: 11px; display: grid; place-items: center; color: #fff; font-weight: 800;
-                background: linear-gradient(135deg, var(--accent), var(--accent2)); box-shadow: 0 8px 20px -6px var(--accent); }
-        nav { display: flex; gap: 8px; align-items: center; }
-        .link { padding: 10px 16px; border-radius: 999px; text-decoration: none; color: var(--muted); font-weight: 600; font-size: .92rem; transition: color .2s; }
-        .link:hover { color: var(--text); }
-
-        .btn { display: inline-block; padding: 12px 26px; border-radius: 999px; text-decoration: none; font-weight: 700; font-size: .95rem; transition: transform .2s, box-shadow .2s; }
-        .btn:hover { transform: translateY(-2px); }
-        .btn-primary { color: #fff; background: linear-gradient(135deg, var(--accent), var(--accent2)); box-shadow: 0 12px 28px -8px var(--accent); }
-        .btn-ghost { color: var(--text); background: var(--card); border: 1px solid var(--border); backdrop-filter: blur(10px); }
-
-        .hero { text-align: center; padding: 72px 0 40px; animation: rise .8s ease both; }
-        .pill { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 999px; font-size: .8rem; font-weight: 600;
-                background: var(--card); border: 1px solid var(--border); color: var(--muted); backdrop-filter: blur(10px); }
-        .dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 4px rgba(34,197,94,.2); }
-        h1 { font-size: clamp(2.4rem, 7vw, 4.6rem); line-height: 1.05; letter-spacing: -.03em; font-weight: 800; margin: 24px 0 20px; }
-        .grad { background: linear-gradient(90deg, var(--accent), var(--accent2), #38bdf8); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        .lead { max-width: 540px; margin: 0 auto 34px; color: var(--muted); font-size: 1.1rem; }
-        .actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
-
-        .preview { margin: 40px auto 0; max-width: 820px; padding: 14px; border-radius: 26px; background: var(--card); border: 1px solid var(--border);
-                   box-shadow: var(--shadow); backdrop-filter: blur(14px); animation: float 6s ease-in-out infinite; }
-        .preview-inner { border-radius: 18px; padding: 22px; border: 1px solid var(--border); }
-        .dots span { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; }
-        .dots span:nth-child(1) { background: #fb7185; } .dots span:nth-child(2) { background: #fbbf24; } .dots span:nth-child(3) { background: #34d399; }
-        .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 20px; }
-        .stat { padding: 18px; border-radius: 16px; border: 1px solid var(--border); text-align: left; }
-        .stat small { color: var(--muted); font-size: .8rem; }
-        .stat strong { display: block; font-size: 1.8rem; letter-spacing: -.02em; }
-        .bar { height: 10px; border-radius: 99px; background: var(--border); margin-top: 14px; overflow: hidden; }
-        .bar i { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
-
-        .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; padding: 70px 0; }
-        .card { padding: 26px; border-radius: 22px; background: var(--card); border: 1px solid var(--border); backdrop-filter: blur(10px); transition: transform .25s, box-shadow .25s; }
-        .card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
-        .icon { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; font-size: 1.2rem; margin-bottom: 16px;
-                background: linear-gradient(135deg, rgba(109,93,252,.18), rgba(180,76,245,.18)); }
-        .card h3 { font-size: 1.05rem; margin-bottom: 6px; }
-        .card p { color: var(--muted); font-size: .92rem; }
-
-        footer { text-align: center; padding: 28px 0 36px; color: var(--muted); font-size: .8rem; border-top: 1px solid var(--border); }
-
-        @@media (max-width: 720px) {
-            .stats, .features { grid-template-columns: 1fr; }
-            .hero { padding-top: 40px; }
-        }
+        .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+        header { display: flex; align-items: center; justify-content: space-between; padding: 26px 0; }
+        .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.2rem; color: inherit; text-decoration: none; }
+        .logo { width: 30px; height: 30px; border-radius: 9px; background: linear-gradient(135deg, #e879f9, #22d3ee); }
+        nav { display: flex; gap: 4px; padding: 5px; border-radius: 999px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); }
+        nav a { text-decoration: none; font-weight: 600; font-size: .9rem; padding: 9px 20px; border-radius: 999px; color: rgba(255,255,255,.7); }
+        nav a.solid { background: #fff; color: #000; }
+        .main { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 50px; align-items: center; padding: 60px 0; }
+        .tag { display: inline-block; padding: 7px 16px; border-radius: 999px; font-size: .72rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+               color: #67e8f9; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); }
+        h1 { font-size: clamp(2.5rem, 7vw, 4.6rem); line-height: 1.02; letter-spacing: -.035em; font-weight: 800; margin: 22px 0 20px; }
+        .grad { background: linear-gradient(90deg, #f0abfc, #c4b5fd, #67e8f9); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .lead { color: rgba(255,255,255,.55); font-size: 1.1rem; max-width: 440px; }
+        .actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
+        .btn { display: inline-block; padding: 14px 32px; border-radius: 999px; text-decoration: none; font-weight: 700; color: #fff; }
+        .primary { background: linear-gradient(135deg, #d946ef, #6366f1); box-shadow: 0 0 40px -6px rgba(217,70,239,.6); }
+        .ghost { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.18); }
+        .stats { display: flex; gap: 34px; margin-top: 44px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,.1); }
+        .stats strong { display: block; font-size: 1.6rem; }
+        .stats small { color: rgba(255,255,255,.4); text-transform: uppercase; letter-spacing: .08em; font-size: .7rem; }
+        .panel { padding: 26px; border-radius: 26px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14);
+                 box-shadow: 0 30px 60px -20px rgba(0,0,0,.7); }
+        .dots span { display: inline-block; width: 11px; height: 11px; border-radius: 50%; margin-right: 6px; }
+        .dots span:nth-child(1) { background: #f87171; } .dots span:nth-child(2) { background: #fbbf24; } .dots span:nth-child(3) { background: #4ade80; }
+        .big { font-size: 2.8rem; font-weight: 800; margin: 18px 0 4px; letter-spacing: -.02em; }
+        .sub { color: rgba(255,255,255,.4); font-size: .75rem; text-transform: uppercase; letter-spacing: .15em; }
+        .chart { display: flex; align-items: flex-end; gap: 8px; height: 90px; margin: 20px 0 22px; }
+        .chart i { flex: 1; border-radius: 6px 6px 0 0; background: linear-gradient(to top, #d946ef, #67e8f9); }
+        .row { display: flex; align-items: center; gap: 12px; padding: 12px 14px; margin-top: 10px; border-radius: 14px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); font-size: .9rem; color: rgba(255,255,255,.8); }
+        .tick { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: .75rem; color: #67e8f9; background: rgba(34,211,238,.18); }
+        footer { text-align: center; padding: 26px 0 34px; color: rgba(255,255,255,.35); font-size: .8rem; }
     </style>
 </head>
 <body>
-    <div class="blob b1"></div>
-    <div class="blob b2"></div>
-    <div class="blob b3"></div>
-
     <div class="wrap">
         <header>
-            <a href="/" class="brand">
-                <span class="logo">{{ strtoupper(substr(config('app.name', 'L'), 0, 1)) }}</span>
-                {{ config('app.name', 'Laravel') }}
-            </a>
-            @if (Route::has('login'))
-                <nav>
-                    @auth
-                        <a href="{{ url('/dashboard') }}" class="btn btn-primary">Dashboard</a>
-                    @else
-                        <a href="{{ route('login') }}" class="link">Log in</a>
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="btn btn-primary">Register</a>
-                        @endif
-                    @endauth
-                </nav>
-            @endif
+            <a href="/" class="brand"><span class="logo"></span> My App</a>
+            <nav>
+                <a href="/login">Log in</a>
+                <a href="/register" class="solid">Register</a>
+            </nav>
         </header>
 
-        <main class="hero">
-            <span class="pill"><span class="dot"></span> Ready when you are</span>
-            <h1>Beautifully simple.<br><span class="grad">Built to last.</span></h1>
-            <p class="lead">A calm, focused place to get things done. Sign in to continue, or create an account in a few seconds.</p>
-
-            <div class="actions">
-                @auth
-                    <a href="{{ url('/dashboard') }}" class="btn btn-primary">Go to dashboard</a>
-                @else
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="btn btn-primary">Get started</a>
-                    @endif
-                    @if (Route::has('login'))
-                        <a href="{{ route('login') }}" class="btn btn-ghost">Log in</a>
-                    @endif
-                @endauth
+        <main class="main">
+            <div>
+                <span class="tag">Welcome</span>
+                <h1>Design the<br><span class="grad">future, today.</span></h1>
+                <p class="lead">A sleek, glowing home for your project. Jump back in or create an account to begin.</p>
+                <div class="actions">
+                    <a href="/register" class="btn primary">Get started</a>
+                    <a href="/login" class="btn ghost">Log in</a>
+                </div>
+                <div class="stats">
+                    <div><strong>99.9%</strong><small>Uptime</small></div>
+                    <div><strong>&lt;1s</strong><small>Load time</small></div>
+                    <div><strong>24/7</strong><small>Access</small></div>
+                </div>
             </div>
 
-            <div class="preview">
-                <div class="preview-inner">
-                    <div class="dots"><span></span><span></span><span></span></div>
-                    <div class="stats">
-                        <div class="stat"><small>Active</small><strong>128</strong></div>
-                        <div class="stat"><small>Completed</small><strong>1,024</strong></div>
-                        <div class="stat"><small>Pending</small><strong>16</strong></div>
-                    </div>
-                    <div class="bar"><i style="width: 78%"></i></div>
-                    <div class="bar"><i style="width: 54%"></i></div>
+            <div class="panel">
+                <div class="dots"><span></span><span></span><span></span></div>
+                <div class="big">1,284</div>
+                <div class="sub">Overview</div>
+                <div class="chart">
+                    <i style="height:40%"></i><i style="height:65%"></i><i style="height:45%"></i><i style="height:80%"></i>
+                    <i style="height:55%"></i><i style="height:95%"></i><i style="height:70%"></i>
                 </div>
+                <div class="row"><span class="tick">&#10003;</span> Authentication ready</div>
+                <div class="row"><span class="tick">&#10003;</span> Responsive layout</div>
+                <div class="row"><span class="tick">&#10003;</span> Everything is running</div>
             </div>
         </main>
 
-        <section class="features">
-            <div class="card"><div class="icon">&#9889;</div><h3>Fast setup</h3><p>Up and running in minutes with sensible defaults.</p></div>
-            <div class="card"><div class="icon">&#128274;</div><h3>Secure by design</h3><p>Authentication and protection built in from day one.</p></div>
-            <div class="card"><div class="icon">&#128241;</div><h3>Works everywhere</h3><p>Crisp on phones, tablets, and large desktop screens.</p></div>
-        </section>
-
-        <footer>&copy; {{ date('Y') }} {{ config('app.name', 'Laravel') }}. All rights reserved.</footer>
+        <footer>&copy; 2026 My App</footer>
     </div>
 </body>
 </html>
