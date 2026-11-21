@@ -1,80 +1,122 @@
-
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ config('app.name', 'Laravel') }}</title>
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=plus-jakarta-sans:400,500,600,700,800" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        body { font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif; }
+        @keyframes floaty { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-10px) } }
+        @keyframes rise { from { opacity: 0; transform: translateY(16px) } to { opacity: 1; transform: none } }
+        .floaty { animation: floaty 6s ease-in-out infinite; }
+        .rise { animation: rise .8s cubic-bezier(.2,.7,.2,1) both; }
+        .grid-bg {
+            background-image: linear-gradient(to right, rgb(148 163 184 / .15) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgb(148 163 184 / .15) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 100%);
+        }
+    </style>
 </head>
-<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
+<body class="min-h-screen bg-white text-slate-900 antialiased selection:bg-indigo-200 dark:bg-slate-950 dark:text-slate-100 dark:selection:bg-indigo-500/40">
     <div class="relative isolate overflow-hidden">
-        {{-- soft gradient backdrop --}}
-        <div class="pointer-events-none absolute inset-x-0 -top-40 -z-10 h-[32rem] bg-gradient-to-b from-indigo-100 via-white to-transparent dark:from-indigo-950/60 dark:via-slate-950"></div>
+        <div class="grid-bg pointer-events-none absolute inset-0 -z-10"></div>
+        <div class="pointer-events-none absolute left-1/2 top-[-12rem] -z-10 h-[34rem] w-[60rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-indigo-300/50 via-violet-300/40 to-sky-300/50 blur-3xl dark:from-indigo-600/25 dark:via-violet-600/20 dark:to-sky-600/25"></div>
 
         <header class="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
-            <a href="/" class="flex items-center gap-2 text-lg font-semibold tracking-tight">
-                <span class="grid size-8 place-items-center rounded-lg bg-indigo-600 text-white">{{ strtoupper(substr(config('app.name', 'L'), 0, 1)) }}</span>
+            <a href="/" class="flex items-center gap-2.5 text-lg font-bold tracking-tight">
+                <span class="grid size-9 place-items-center rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 text-white shadow-lg shadow-indigo-600/30">{{ strtoupper(substr(config('app.name', 'L'), 0, 1)) }}</span>
                 {{ config('app.name', 'Laravel') }}
             </a>
-
             @if (Route::has('login'))
-                <nav class="flex items-center gap-2 text-sm font-medium">
+                <nav class="flex items-center gap-2 text-sm font-semibold">
                     @auth
-                        <a href="{{ url('/dashboard') }}" class="rounded-lg bg-indigo-600 px-4 py-2 text-white transition hover:bg-indigo-500">Dashboard</a>
+                        <a href="{{ url('/dashboard') }}" class="rounded-full bg-slate-900 px-5 py-2.5 text-white transition hover:bg-slate-700 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200">Dashboard</a>
                     @else
-                        <a href="{{ route('login') }}" class="rounded-lg px-4 py-2 text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">Log in</a>
+                        <a href="{{ route('login') }}" class="rounded-full px-4 py-2.5 text-slate-600 transition hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">Log in</a>
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="rounded-lg bg-indigo-600 px-4 py-2 text-white transition hover:bg-indigo-500">Register</a>
+                            <a href="{{ route('register') }}" class="rounded-full bg-slate-900 px-5 py-2.5 text-white transition hover:bg-slate-700 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200">Register</a>
                         @endif
                     @endauth
                 </nav>
             @endif
         </header>
 
-        <main class="mx-auto max-w-3xl px-6 pb-24 pt-20 text-center sm:pt-28">
-            <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3 py-1 text-xs font-medium text-slate-600 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-400">
-                <span class="size-1.5 rounded-full bg-emerald-500"></span> Now live
+        <main class="mx-auto max-w-4xl px-6 pb-12 pt-16 text-center sm:pt-24">
+            <span class="rise inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-3.5 py-1.5 text-xs font-semibold text-indigo-700 dark:border-indigo-500/30 dark:bg-indigo-500/10 dark:text-indigo-300">
+                <span class="relative flex size-2"><span class="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex size-2 rounded-full bg-emerald-500"></span></span>
+                Ready when you are
             </span>
 
-            <h1 class="mt-6 text-4xl font-bold tracking-tight sm:text-6xl">
-                Simple. Fast.
-                <span class="bg-gradient-to-r from-indigo-600 to-violet-500 bg-clip-text text-transparent">Yours.</span>
+            <h1 class="rise mt-7 text-5xl font-extrabold leading-[1.05] tracking-tight [animation-delay:.1s] sm:text-7xl">
+                Beautifully simple.<br>
+                <span class="bg-gradient-to-r from-indigo-600 via-violet-600 to-sky-500 bg-clip-text text-transparent">Built to last.</span>
             </h1>
 
-            <p class="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-slate-600 dark:text-slate-400">
-                A clean starting point for your next project. Sign in to get going, or create an account in seconds.
+            <p class="rise mx-auto mt-7 max-w-xl text-lg leading-relaxed text-slate-600 [animation-delay:.2s] dark:text-slate-400">
+                A calm, focused place to get things done. Sign in to continue, or create an account in a few seconds.
             </p>
 
-            <div class="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <div class="rise mt-10 flex flex-col items-center justify-center gap-3 [animation-delay:.3s] sm:flex-row">
                 @auth
-                    <a href="{{ url('/dashboard') }}" class="w-full rounded-xl bg-indigo-600 px-6 py-3 font-medium text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-500 sm:w-auto">Go to dashboard</a>
+                    <a href="{{ url('/dashboard') }}" class="group w-full rounded-full bg-gradient-to-r from-indigo-600 to-violet-600 px-8 py-3.5 font-semibold text-white shadow-xl shadow-indigo-600/30 transition hover:shadow-2xl hover:shadow-indigo-600/40 sm:w-auto">Go to dashboard <span class="inline-block transition group-hover:translate-x-1">&rarr;</span></a>
                 @else
                     @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="w-full rounded-xl bg-indigo-600 px-6 py-3 font-medium text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-500 sm:w-auto">Get started</a>
+                        <a href="{{ route('register') }}" class="group w-full rounded-full bg-gradient-to-r from-indigo-600 to-violet-600 px-8 py-3.5 font-semibold text-white shadow-xl shadow-indigo-600/30 transition hover:shadow-2xl hover:shadow-indigo-600/40 sm:w-auto">Get started <span class="inline-block transition group-hover:translate-x-1">&rarr;</span></a>
                     @endif
                     @if (Route::has('login'))
-                        <a href="{{ route('login') }}" class="w-full rounded-xl border border-slate-300 px-6 py-3 font-medium transition hover:bg-slate-50 dark:border-slate-700 dark:hover:bg-slate-900 sm:w-auto">Log in</a>
+                        <a href="{{ route('login') }}" class="w-full rounded-full border border-slate-300 bg-white/60 px-8 py-3.5 font-semibold backdrop-blur transition hover:bg-white dark:border-slate-700 dark:bg-slate-900/60 dark:hover:bg-slate-900 sm:w-auto">Log in</a>
                     @endif
                 @endauth
             </div>
         </main>
 
-        <section class="mx-auto grid max-w-6xl gap-4 px-6 pb-24 sm:grid-cols-3">
+        {{-- app preview --}}
+        <section class="mx-auto max-w-5xl px-6 pb-24">
+            <div class="floaty relative rounded-3xl border border-slate-200 bg-white/80 p-3 shadow-2xl shadow-indigo-900/10 backdrop-blur dark:border-slate-800 dark:bg-slate-900/80">
+                <div class="rounded-2xl bg-slate-50 p-6 dark:bg-slate-950">
+                    <div class="flex items-center gap-1.5">
+                        <span class="size-2.5 rounded-full bg-rose-400"></span><span class="size-2.5 rounded-full bg-amber-400"></span><span class="size-2.5 rounded-full bg-emerald-400"></span>
+                    </div>
+                    <div class="mt-6 grid gap-4 sm:grid-cols-3">
+                        @foreach ([['Active', '128', 'from-indigo-500 to-violet-500'], ['Completed', '1,024', 'from-emerald-500 to-teal-500'], ['Pending', '16', 'from-amber-500 to-orange-500']] as [$label, $value, $grad])
+                            <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+                                <div class="size-9 rounded-xl bg-gradient-to-br {{ $grad }}"></div>
+                                <p class="mt-4 text-sm text-slate-500 dark:text-slate-400">{{ $label }}</p>
+                                <p class="mt-1 text-3xl font-extrabold tracking-tight">{{ $value }}</p>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="mt-4 space-y-2.5">
+                        @foreach ([80, 60, 40] as $w)
+                            <div class="h-3 rounded-full bg-slate-200 dark:bg-slate-800"><div class="h-3 rounded-full bg-gradient-to-r from-indigo-500 to-violet-500" style="width: {{ $w }}%"></div></div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mx-auto grid max-w-6xl gap-5 px-6 pb-24 sm:grid-cols-3">
             @foreach ([
-                ['Fast setup', 'Up and running in minutes with sensible defaults.'],
-                ['Secure', 'Built-in authentication and protection out of the box.'],
-                ['Responsive', 'Looks great on phones, tablets, and desktops.'],
-            ] as [$title, $text])
-                <div class="rounded-2xl border border-slate-200 bg-white p-6 transition hover:-translate-y-0.5 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900">
-                    <h3 class="font-semibold">{{ $title }}</h3>
+                ['Fast setup', 'Up and running in minutes with sensible defaults.', 'M13 10V3L4 14h7v7l9-11h-7z'],
+                ['Secure by design', 'Authentication and protection built in from day one.', 'M12 11c0-1.1.9-2 2-2m-2 2a2 2 0 10-4 0v3h6v-3a2 2 0 00-2-2zm-6 3h12v6H6z'],
+                ['Works everywhere', 'Crisp on phones, tablets, and large desktop screens.', 'M9 17h6m-7 4h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z'],
+            ] as [$title, $text, $icon])
+                <div class="group rounded-3xl border border-slate-200 bg-white p-7 transition duration-300 hover:-translate-y-1 hover:border-indigo-300 hover:shadow-xl hover:shadow-indigo-500/10 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-indigo-500/50">
+                    <div class="grid size-11 place-items-center rounded-2xl bg-indigo-50 text-indigo-600 transition group-hover:bg-indigo-600 group-hover:text-white dark:bg-indigo-500/10 dark:text-indigo-300">
+                        <svg class="size-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="{{ $icon }}"/></svg>
+                    </div>
+                    <h3 class="mt-5 text-lg font-bold">{{ $title }}</h3>
                     <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">{{ $text }}</p>
                 </div>
             @endforeach
         </section>
 
-        <footer class="border-t border-slate-200 py-6 text-center text-xs text-slate-500 dark:border-slate-800">
-            &copy; {{ date('Y') }} {{ config('app.name', 'Laravel') }}
+        <footer class="border-t border-slate-200 py-8 text-center text-xs text-slate-500 dark:border-slate-800">
+            &copy; {{ date('Y') }} {{ config('app.name', 'Laravel') }}. All rights reserved.
         </footer>
     </div>
 </body>
