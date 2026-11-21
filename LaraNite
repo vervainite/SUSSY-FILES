@@ -1,107 +1,127 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=space-grotesk:400,500,600,700|inter:400,500" rel="stylesheet">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link href="https://fonts.bunny.net/css?family=plus-jakarta-sans:400,500,600,700,800" rel="stylesheet">
+    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @else
+        <script src="https://cdn.tailwindcss.com"></script>
+    @endif
     <style>
-        body { font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; }
-        .display { font-family: 'Space Grotesk', ui-sans-serif, sans-serif; }
-        @keyframes drift1 { 0%,100% { transform: translate(0,0) scale(1) } 50% { transform: translate(60px,40px) scale(1.15) } }
-        @keyframes drift2 { 0%,100% { transform: translate(0,0) scale(1) } 50% { transform: translate(-50px,60px) scale(1.1) } }
-        @keyframes drift3 { 0%,100% { transform: translate(0,0) scale(1) } 50% { transform: translate(40px,-50px) scale(1.2) } }
-        @keyframes rise { from { opacity: 0; transform: translateY(20px) } to { opacity: 1; transform: none } }
-        @keyframes bob { 0%,100% { transform: translateY(0) rotate(var(--r,0deg)) } 50% { transform: translateY(-12px) rotate(var(--r,0deg)) } }
-        .rise { animation: rise .9s cubic-bezier(.2,.7,.2,1) both; }
-        .bob { animation: bob 7s ease-in-out infinite; }
-        .noise::after { content:''; position:absolute; inset:0; pointer-events:none; opacity:.06;
-            background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
-        .glass-border { background: linear-gradient(#0e0e1a,#0e0e1a) padding-box, linear-gradient(135deg, rgba(232,121,249,.6), rgba(255,255,255,.08) 40%, rgba(34,211,238,.6)) border-box; border: 1px solid transparent; }
+        body { font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif; }
+        @keyframes floaty { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-10px) } }
+        @keyframes rise { from { opacity: 0; transform: translateY(16px) } to { opacity: 1; transform: none } }
+        .floaty { animation: floaty 6s ease-in-out infinite; }
+        .rise { animation: rise .8s cubic-bezier(.2,.7,.2,1) both; }
+        .grid-bg {
+            background-image: linear-gradient(to right, rgb(148 163 184 / .15) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgb(148 163 184 / .15) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 100%);
+        }
     </style>
 </head>
-<body class="noise relative min-h-screen overflow-hidden bg-[#07070f] text-white antialiased selection:bg-fuchsia-500/40">
-    <div class="pointer-events-none absolute -left-40 -top-40 size-[34rem] rounded-full bg-fuchsia-600/35 blur-[110px]" style="animation: drift1 16s ease-in-out infinite"></div>
-    <div class="pointer-events-none absolute -right-32 top-1/4 size-[30rem] rounded-full bg-cyan-500/30 blur-[110px]" style="animation: drift2 19s ease-in-out infinite"></div>
-    <div class="pointer-events-none absolute -bottom-52 left-1/4 size-[36rem] rounded-full bg-indigo-600/35 blur-[120px]" style="animation: drift3 22s ease-in-out infinite"></div>
+<body class="min-h-screen bg-white text-slate-900 antialiased selection:bg-indigo-200 dark:bg-slate-950 dark:text-slate-100 dark:selection:bg-indigo-500/40">
+    <div class="relative isolate overflow-hidden">
+        <div class="grid-bg pointer-events-none absolute inset-0 -z-10"></div>
+        <div class="pointer-events-none absolute left-1/2 top-[-12rem] -z-10 h-[34rem] w-[60rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-indigo-300/50 via-violet-300/40 to-sky-300/50 blur-3xl dark:from-indigo-600/25 dark:via-violet-600/20 dark:to-sky-600/25"></div>
 
-    <div class="relative mx-auto flex min-h-screen max-w-6xl flex-col px-6">
-        <header class="flex items-center justify-between py-7">
-            <a href="/" class="display flex items-center gap-2.5 text-xl font-bold tracking-tight">
-                <span class="size-7 rounded-lg bg-gradient-to-br from-fuchsia-500 to-cyan-400"></span>
+        <header class="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
+            <a href="/" class="flex items-center gap-2.5 text-lg font-bold tracking-tight">
+                <span class="grid size-9 place-items-center rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 text-white shadow-lg shadow-indigo-600/30">{{ strtoupper(substr(config('app.name', 'L'), 0, 1)) }}</span>
                 {{ config('app.name', 'Laravel') }}
             </a>
             @if (Route::has('login'))
-                <nav class="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 p-1.5 text-sm backdrop-blur-xl">
+                <nav class="flex items-center gap-2 text-sm font-semibold">
                     @auth
-                        <a href="{{ url('/dashboard') }}" class="rounded-full bg-white px-5 py-2 font-semibold text-black transition hover:bg-white/85">Dashboard</a>
+                        <a href="{{ url('/dashboard') }}" class="rounded-full bg-slate-900 px-5 py-2.5 text-white transition hover:bg-slate-700 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200">Dashboard</a>
                     @else
-                        <a href="{{ route('login') }}" class="rounded-full px-5 py-2 text-white/70 transition hover:text-white">Log in</a>
+                        <a href="{{ route('login') }}" class="rounded-full px-4 py-2.5 text-slate-600 transition hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">Log in</a>
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="rounded-full bg-white px-5 py-2 font-semibold text-black transition hover:bg-white/85">Register</a>
+                            <a href="{{ route('register') }}" class="rounded-full bg-slate-900 px-5 py-2.5 text-white transition hover:bg-slate-700 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200">Register</a>
                         @endif
                     @endauth
                 </nav>
             @endif
         </header>
 
-        <main class="grid flex-1 items-center gap-16 py-10 lg:grid-cols-[1.1fr_1fr]">
-            <div>
-                <span class="rise inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.2em] text-cyan-300 backdrop-blur">
-                    <span class="size-1.5 rounded-full bg-cyan-300 shadow-[0_0_10px_#67e8f9]"></span> Welcome
-                </span>
-                <h1 class="display rise mt-6 text-5xl font-bold leading-[1.02] tracking-tight [animation-delay:.1s] sm:text-7xl">
-                    Design the<br>
-                    <span class="bg-gradient-to-r from-fuchsia-400 via-violet-300 to-cyan-300 bg-clip-text text-transparent">future, today.</span>
-                </h1>
-                <p class="rise mt-7 max-w-md text-lg leading-relaxed text-white/55 [animation-delay:.2s]">
-                    A sleek, glowing home for your project. Jump back in or create an account to begin.
-                </p>
+        <main class="mx-auto max-w-4xl px-6 pb-12 pt-16 text-center sm:pt-24">
+            <span class="rise inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-3.5 py-1.5 text-xs font-semibold text-indigo-700 dark:border-indigo-500/30 dark:bg-indigo-500/10 dark:text-indigo-300">
+                <span class="relative flex size-2"><span class="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex size-2 rounded-full bg-emerald-500"></span></span>
+                Ready when you are
+            </span>
 
-                <div class="rise mt-10 flex flex-wrap gap-4 [animation-delay:.3s]">
-                    @auth
-                        <a href="{{ url('/dashboard') }}" class="rounded-full bg-gradient-to-r from-fuchsia-500 via-violet-500 to-indigo-500 px-8 py-3.5 font-semibold shadow-[0_0_40px_-5px_rgba(217,70,239,.6)] transition hover:scale-105">Open dashboard</a>
-                    @else
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="rounded-full bg-gradient-to-r from-fuchsia-500 via-violet-500 to-indigo-500 px-8 py-3.5 font-semibold shadow-[0_0_40px_-5px_rgba(217,70,239,.6)] transition hover:scale-105">Get started</a>
-                        @endif
-                        @if (Route::has('login'))
-                            <a href="{{ route('login') }}" class="rounded-full border border-white/15 bg-white/5 px-8 py-3.5 font-semibold backdrop-blur transition hover:bg-white/15">Log in</a>
-                        @endif
-                    @endauth
-                </div>
+            <h1 class="rise mt-7 text-5xl font-extrabold leading-[1.05] tracking-tight [animation-delay:.1s] sm:text-7xl">
+                Beautifully simple.<br>
+                <span class="bg-gradient-to-r from-indigo-600 via-violet-600 to-sky-500 bg-clip-text text-transparent">Built to last.</span>
+            </h1>
 
-                <dl class="rise mt-14 grid max-w-md grid-cols-3 gap-6 border-t border-white/10 pt-8 [animation-delay:.4s]">
-                    @foreach ([['99.9%', 'Uptime'], ['<1s', 'Load time'], ['24/7', 'Access']] as [$n, $l])
-                        <div><dt class="display text-2xl font-bold">{{ $n }}</dt><dd class="mt-1 text-xs uppercase tracking-wider text-white/40">{{ $l }}</dd></div>
-                    @endforeach
-                </dl>
-            </div>
+            <p class="rise mx-auto mt-7 max-w-xl text-lg leading-relaxed text-slate-600 [animation-delay:.2s] dark:text-slate-400">
+                A calm, focused place to get things done. Sign in to continue, or create an account in a few seconds.
+            </p>
 
-            {{-- floating glass cards --}}
-            <div class="relative mx-auto h-[26rem] w-full max-w-md">
-                <div class="bob glass-border absolute left-0 top-4 w-72 rounded-3xl p-6 shadow-2xl shadow-fuchsia-900/30" style="--r:-4deg">
-                    <p class="text-xs uppercase tracking-widest text-white/40">Overview</p>
-                    <p class="display mt-2 text-4xl font-bold">1,284</p>
-                    <div class="mt-5 flex h-16 items-end gap-1.5">
-                        @foreach ([40, 65, 45, 80, 55, 95, 70] as $h)
-                            <div class="flex-1 rounded-t bg-gradient-to-t from-fuchsia-500 to-cyan-300" style="height: {{ $h }}%"></div>
-                        @endforeach
-                    </div>
-                </div>
-                <div class="bob glass-border absolute bottom-2 right-0 w-64 rounded-3xl p-5 shadow-2xl shadow-cyan-900/30 [animation-delay:-3s]" style="--r:3deg">
-                    <div class="flex items-center gap-3">
-                        <span class="grid size-10 place-items-center rounded-full bg-gradient-to-br from-cyan-400 to-indigo-500 text-sm font-bold">&#10003;</span>
-                        <div><p class="text-sm font-semibold">All set</p><p class="text-xs text-white/45">Everything is running</p></div>
-                    </div>
-                    <div class="mt-4 h-2 rounded-full bg-white/10"><div class="h-2 w-4/5 rounded-full bg-gradient-to-r from-fuchsia-400 to-cyan-300"></div></div>
-                </div>
+            <div class="rise mt-10 flex flex-col items-center justify-center gap-3 [animation-delay:.3s] sm:flex-row">
+                @auth
+                    <a href="{{ url('/dashboard') }}" class="group w-full rounded-full bg-gradient-to-r from-indigo-600 to-violet-600 px-8 py-3.5 font-semibold text-white shadow-xl shadow-indigo-600/30 transition hover:shadow-2xl hover:shadow-indigo-600/40 sm:w-auto">Go to dashboard <span class="inline-block transition group-hover:translate-x-1">&rarr;</span></a>
+                @else
+                    @if (Route::has('register'))
+                        <a href="{{ route('register') }}" class="group w-full rounded-full bg-gradient-to-r from-indigo-600 to-violet-600 px-8 py-3.5 font-semibold text-white shadow-xl shadow-indigo-600/30 transition hover:shadow-2xl hover:shadow-indigo-600/40 sm:w-auto">Get started <span class="inline-block transition group-hover:translate-x-1">&rarr;</span></a>
+                    @endif
+                    @if (Route::has('login'))
+                        <a href="{{ route('login') }}" class="w-full rounded-full border border-slate-300 bg-white/60 px-8 py-3.5 font-semibold backdrop-blur transition hover:bg-white dark:border-slate-700 dark:bg-slate-900/60 dark:hover:bg-slate-900 sm:w-auto">Log in</a>
+                    @endif
+                @endauth
             </div>
         </main>
 
-        <footer class="py-7 text-center text-xs text-white/35">&copy; {{ date('Y') }} {{ config('app.name', 'Laravel') }}</footer>
+        {{-- app preview --}}
+        <section class="mx-auto max-w-5xl px-6 pb-24">
+            <div class="floaty relative rounded-3xl border border-slate-200 bg-white/80 p-3 shadow-2xl shadow-indigo-900/10 backdrop-blur dark:border-slate-800 dark:bg-slate-900/80">
+                <div class="rounded-2xl bg-slate-50 p-6 dark:bg-slate-950">
+                    <div class="flex items-center gap-1.5">
+                        <span class="size-2.5 rounded-full bg-rose-400"></span><span class="size-2.5 rounded-full bg-amber-400"></span><span class="size-2.5 rounded-full bg-emerald-400"></span>
+                    </div>
+                    <div class="mt-6 grid gap-4 sm:grid-cols-3">
+                        @foreach ([['Active', '128', 'from-indigo-500 to-violet-500'], ['Completed', '1,024', 'from-emerald-500 to-teal-500'], ['Pending', '16', 'from-amber-500 to-orange-500']] as [$label, $value, $grad])
+                            <div class="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+                                <div class="size-9 rounded-xl bg-gradient-to-br {{ $grad }}"></div>
+                                <p class="mt-4 text-sm text-slate-500 dark:text-slate-400">{{ $label }}</p>
+                                <p class="mt-1 text-3xl font-extrabold tracking-tight">{{ $value }}</p>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="mt-4 space-y-2.5">
+                        @foreach ([80, 60, 40] as $w)
+                            <div class="h-3 rounded-full bg-slate-200 dark:bg-slate-800"><div class="h-3 rounded-full bg-gradient-to-r from-indigo-500 to-violet-500" style="width: {{ $w }}%"></div></div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mx-auto grid max-w-6xl gap-5 px-6 pb-24 sm:grid-cols-3">
+            @foreach ([
+                ['Fast setup', 'Up and running in minutes with sensible defaults.', 'M13 10V3L4 14h7v7l9-11h-7z'],
+                ['Secure by design', 'Authentication and protection built in from day one.', 'M12 11c0-1.1.9-2 2-2m-2 2a2 2 0 10-4 0v3h6v-3a2 2 0 00-2-2zm-6 3h12v6H6z'],
+                ['Works everywhere', 'Crisp on phones, tablets, and large desktop screens.', 'M9 17h6m-7 4h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z'],
+            ] as [$title, $text, $icon])
+                <div class="group rounded-3xl border border-slate-200 bg-white p-7 transition duration-300 hover:-translate-y-1 hover:border-indigo-300 hover:shadow-xl hover:shadow-indigo-500/10 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-indigo-500/50">
+                    <div class="grid size-11 place-items-center rounded-2xl bg-indigo-50 text-indigo-600 transition group-hover:bg-indigo-600 group-hover:text-white dark:bg-indigo-500/10 dark:text-indigo-300">
+                        <svg class="size-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="{{ $icon }}"/></svg>
+                    </div>
+                    <h3 class="mt-5 text-lg font-bold">{{ $title }}</h3>
+                    <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">{{ $text }}</p>
+                </div>
+            @endforeach
+        </section>
+
+        <footer class="border-t border-slate-200 py-8 text-center text-xs text-slate-500 dark:border-slate-800">
+            &copy; {{ date('Y') }} {{ config('app.name', 'Laravel') }}. All rights reserved.
+        </footer>
     </div>
 </body>
 </html>
