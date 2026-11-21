@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            min-height: 100vh; color: #2b2118; line-height: 1.6; background: #faf5ec;
+            font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+            background-image:
+                radial-gradient(500px 360px at 90% 5%, rgba(224,122,95,.22), transparent 70%),
+                radial-gradient(520px 380px at 0% 60%, rgba(129,178,154,.22), transparent 70%);
+        }
+        .serif { font-family: Georgia, "Times New Roman", Times, serif; }
+        .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+        header { display: flex; align-items: center; justify-content: space-between; padding: 28px 0; border-bottom: 1px solid #e7dcc9; }
+        .brand { font-size: 1.5rem; font-weight: 700; color: #2b2118; text-decoration: none; font-family: Georgia, "Times New Roman", serif; }
+        .brand i { color: #e07a5f; }
+        nav { display: flex; align-items: center; gap: 22px; font-size: .92rem; font-weight: 600; }
+        nav a { color: #6b5a48; text-decoration: none; }
+        nav a:hover { color: #2b2118; }
+        nav a.solid { color: #fff; background: #2b2118; padding: 10px 22px; border-radius: 999px; }
+        .hero { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 56px; align-items: center; padding: 80px 0 50px; }
+        .eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: .78rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: #e07a5f; }
+        .eyebrow::before { content: ""; width: 34px; height: 2px; background: #e07a5f; }
+        h1 { font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.6rem, 7vw, 4.6rem); line-height: 1.05; font-weight: 700; letter-spacing: -.02em; margin: 20px 0 22px; }
+        h1 em { color: #e07a5f; font-style: italic; }
+        .lead { color: #6b5a48; font-size: 1.12rem; max-width: 460px; }
+        .actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
+        .btn { display: inline-block; text-decoration: none; font-weight: 700; padding: 15px 32px; border-radius: 999px; transition: transform .2s, box-shadow .2s; }
+        .btn:hover { transform: translateY(-3px); }
+        .primary { background: #e07a5f; color: #fff; box-shadow: 0 14px 28px -12px #e07a5f; }
+        .outline { border: 2px solid #2b2118; color: #2b2118; }
+        .art { position: relative; height: 380px; }
+        .shape { position: absolute; }
+        .s1 { width: 230px; height: 290px; left: 8%; top: 0; border-radius: 120px 120px 20px 20px; background: #e07a5f; }
+        .s2 { width: 200px; height: 200px; right: 4%; top: 40px; border-radius: 50%; background: #f2cc8f; }
+        .s3 { width: 190px; height: 190px; right: 12%; bottom: 0; border-radius: 28px; background: #81b29a; transform: rotate(10deg); }
+        .s4 { width: 120px; height: 120px; left: 0; bottom: 10px; border-radius: 50%; border: 5px solid #2b2118; }
+        .quote { position: absolute; left: 14%; bottom: 36px; max-width: 220px; background: #fff; border: 1px solid #e7dcc9; border-radius: 18px;
+                 padding: 16px 18px; box-shadow: 0 20px 40px -20px rgba(43,33,24,.35); font-size: .88rem; }
+        .quote b { display: block; font-family: Georgia, serif; font-size: 1.05rem; margin-bottom: 2px; }
+        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0; margin: 30px 0 70px; border: 1px solid #e7dcc9; border-radius: 24px; overflow: hidden; background: #fffdf8; }
+        .feat { padding: 32px 28px; border-right: 1px solid #e7dcc9; }
+        .feat:last-child { border-right: 0; }
+        .num { font-family: Georgia, serif; font-size: 2.2rem; color: #e07a5f; font-style: italic; }
+        .feat h3 { font-family: Georgia, serif; font-size: 1.3rem; margin: 6px 0 8px; }
+        .feat p { color: #6b5a48; font-size: .94rem; }
+        footer { text-align: center; padding: 26px 0 36px; color: #9a8a76; font-size: .82rem; border-top: 1px solid #e7dcc9; }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <header>
+            <a href="/" class="brand">My App<i>.</i></a>
+            <nav>
+                <a href="/login">Log in</a>
+                <a href="/register" class="solid">Register</a>
+            </nav>
+        </header>
+
+        <main class="hero">
+            <div>
+                <span class="eyebrow">Welcome</span>
+                <h1>Thoughtfully made,<br><em>beautifully simple.</em></h1>
+                <p class="lead">A warm, welcoming place to get your work done. Sign in to pick up where you left off, or create an account in seconds.</p>
+                <div class="actions">
+                    <a href="/register" class="btn primary">Get started</a>
+                    <a href="/login" class="btn outline">Log in</a>
+                </div>
+            </div>
+
+            <div class="art">
+                <div class="shape s1"></div>
+                <div class="shape s2"></div>
+                <div class="shape s3"></div>
+                <div class="shape s4"></div>
+                <div class="quote"><b>All set &#10003;</b>Everything is up and running smoothly.</div>
+            </div>
+        </main>
+
+        <section class="features">
+            <div class="feat"><div class="num">01</div><h3>Fast setup</h3><p>Up and running in minutes with sensible defaults.</p></div>
+            <div class="feat"><div class="num">02</div><h3>Secure by design</h3><p>Authentication and protection built in from day one.</p></div>
+            <div class="feat"><div class="num">03</div><h3>Works everywhere</h3><p>Crisp on phones, tablets, and large desktop screens.</p></div>
+        </section>
+
+        <footer>&copy; 2026 My App. All rights reserved.</footer>
+    </div>
+</body>
+</html>
