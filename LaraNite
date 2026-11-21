@@ -1,1 +1,81 @@
 
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ config('app.name', 'Laravel') }}</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
+    <div class="relative isolate overflow-hidden">
+        {{-- soft gradient backdrop --}}
+        <div class="pointer-events-none absolute inset-x-0 -top-40 -z-10 h-[32rem] bg-gradient-to-b from-indigo-100 via-white to-transparent dark:from-indigo-950/60 dark:via-slate-950"></div>
+
+        <header class="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
+            <a href="/" class="flex items-center gap-2 text-lg font-semibold tracking-tight">
+                <span class="grid size-8 place-items-center rounded-lg bg-indigo-600 text-white">{{ strtoupper(substr(config('app.name', 'L'), 0, 1)) }}</span>
+                {{ config('app.name', 'Laravel') }}
+            </a>
+
+            @if (Route::has('login'))
+                <nav class="flex items-center gap-2 text-sm font-medium">
+                    @auth
+                        <a href="{{ url('/dashboard') }}" class="rounded-lg bg-indigo-600 px-4 py-2 text-white transition hover:bg-indigo-500">Dashboard</a>
+                    @else
+                        <a href="{{ route('login') }}" class="rounded-lg px-4 py-2 text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">Log in</a>
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}" class="rounded-lg bg-indigo-600 px-4 py-2 text-white transition hover:bg-indigo-500">Register</a>
+                        @endif
+                    @endauth
+                </nav>
+            @endif
+        </header>
+
+        <main class="mx-auto max-w-3xl px-6 pb-24 pt-20 text-center sm:pt-28">
+            <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3 py-1 text-xs font-medium text-slate-600 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-400">
+                <span class="size-1.5 rounded-full bg-emerald-500"></span> Now live
+            </span>
+
+            <h1 class="mt-6 text-4xl font-bold tracking-tight sm:text-6xl">
+                Simple. Fast.
+                <span class="bg-gradient-to-r from-indigo-600 to-violet-500 bg-clip-text text-transparent">Yours.</span>
+            </h1>
+
+            <p class="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-slate-600 dark:text-slate-400">
+                A clean starting point for your next project. Sign in to get going, or create an account in seconds.
+            </p>
+
+            <div class="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                @auth
+                    <a href="{{ url('/dashboard') }}" class="w-full rounded-xl bg-indigo-600 px-6 py-3 font-medium text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-500 sm:w-auto">Go to dashboard</a>
+                @else
+                    @if (Route::has('register'))
+                        <a href="{{ route('register') }}" class="w-full rounded-xl bg-indigo-600 px-6 py-3 font-medium text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-500 sm:w-auto">Get started</a>
+                    @endif
+                    @if (Route::has('login'))
+                        <a href="{{ route('login') }}" class="w-full rounded-xl border border-slate-300 px-6 py-3 font-medium transition hover:bg-slate-50 dark:border-slate-700 dark:hover:bg-slate-900 sm:w-auto">Log in</a>
+                    @endif
+                @endauth
+            </div>
+        </main>
+
+        <section class="mx-auto grid max-w-6xl gap-4 px-6 pb-24 sm:grid-cols-3">
+            @foreach ([
+                ['Fast setup', 'Up and running in minutes with sensible defaults.'],
+                ['Secure', 'Built-in authentication and protection out of the box.'],
+                ['Responsive', 'Looks great on phones, tablets, and desktops.'],
+            ] as [$title, $text])
+                <div class="rounded-2xl border border-slate-200 bg-white p-6 transition hover:-translate-y-0.5 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900">
+                    <h3 class="font-semibold">{{ $title }}</h3>
+                    <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">{{ $text }}</p>
+                </div>
+            @endforeach
+        </section>
+
+        <footer class="border-t border-slate-200 py-6 text-center text-xs text-slate-500 dark:border-slate-800">
+            &copy; {{ date('Y') }} {{ config('app.name', 'Laravel') }}
+        </footer>
+    </div>
+</body>
+</html>
