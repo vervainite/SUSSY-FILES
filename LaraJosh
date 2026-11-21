@@ -1,1 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            min-height: 100vh; color: #14142b; line-height: 1.5;
+            font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+            background:
+                radial-gradient(700px 380px at 50% -5%, rgba(109,93,252,.22), transparent 70%),
+                linear-gradient(#ffffff, #f4f5fb);
+        }
+        .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+        header { display: flex; align-items: center; justify-content: space-between; padding: 24px 0; }
+        .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.15rem; color: inherit; text-decoration: none; }
+        .logo { width: 36px; height: 36px; border-radius: 11px; display: grid; place-items: center; color: #fff; font-weight: 800;
+                background: linear-gradient(135deg, #4f46e5, #7c3aed); box-shadow: 0 8px 18px -6px #4f46e5; }
+        nav { display: flex; align-items: center; gap: 6px; }
+        nav a { text-decoration: none; font-weight: 600; font-size: .92rem; padding: 10px 18px; border-radius: 999px; color: #55557a; }
+        nav a.solid { background: #14142b; color: #fff; }
+        .hero { text-align: center; padding: 70px 0 30px; }
+        .pill { display: inline-block; padding: 7px 14px; border-radius: 999px; font-size: .8rem; font-weight: 600; color: #4f46e5;
+                background: #eef0ff; border: 1px solid #dcdfff; }
+        h1 { font-size: clamp(2.4rem, 7vw, 4.5rem); line-height: 1.05; letter-spacing: -.035em; font-weight: 800; margin: 24px 0 18px; }
+        .grad { background: linear-gradient(90deg, #4f46e5, #7c3aed, #0ea5e9); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .lead { max-width: 520px; margin: 0 auto 32px; color: #55557a; font-size: 1.1rem; }
+        .actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+        .btn { display: inline-block; padding: 14px 30px; border-radius: 999px; text-decoration: none; font-weight: 700; }
+        .primary { color: #fff; background: linear-gradient(135deg, #4f46e5, #7c3aed); box-shadow: 0 14px 30px -10px #4f46e5; }
+        .ghost { color: #14142b; background: #fff; border: 1px solid #dfe0ee; }
+        .mock { max-width: 780px; margin: 44px auto 0; padding: 12px; border-radius: 26px; background: #fff; border: 1px solid #e6e7f3;
+                box-shadow: 0 30px 60px -30px rgba(79,70,229,.35); }
+        .mock-in { background: #f7f8fd; border-radius: 18px; padding: 22px; }
+        .dots span { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; }
+        .dots span:nth-child(1) { background: #fb7185; } .dots span:nth-child(2) { background: #fbbf24; } .dots span:nth-child(3) { background: #34d399; }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; margin-top: 20px; }
+        .stat { background: #fff; border: 1px solid #e6e7f3; border-radius: 16px; padding: 18px; text-align: left; }
+        .stat small { color: #77779a; }
+        .stat strong { display: block; font-size: 1.8rem; letter-spacing: -.02em; }
+        .bar { height: 10px; border-radius: 99px; background: #e6e7f3; margin-top: 14px; }
+        .bar i { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, #4f46e5, #7c3aed); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; padding: 70px 0; }
+        .card { background: #fff; border: 1px solid #e6e7f3; border-radius: 22px; padding: 26px; transition: transform .25s, box-shadow .25s; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 24px 40px -24px rgba(79,70,229,.4); }
+        .icon { width: 44px; height: 44px; border-radius: 14px; background: #eef0ff; display: grid; place-items: center; font-size: 1.2rem; margin-bottom: 14px; }
+        .card h3 { font-size: 1.05rem; margin-bottom: 6px; }
+        .card p { color: #66668a; font-size: .92rem; }
+        footer { text-align: center; padding: 26px 0 34px; color: #88889f; font-size: .8rem; border-top: 1px solid #e6e7f3; }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <header>
+            <a href="/" class="brand"><span class="logo">A</span> My App</a>
+            <nav>
+                <a href="/login">Log in</a>
+                <a href="/register" class="solid">Register</a>
+            </nav>
+        </header>
 
+        <main class="hero">
+            <span class="pill">Ready when you are</span>
+            <h1>Beautifully simple.<br><span class="grad">Built to last.</span></h1>
+            <p class="lead">A calm, focused place to get things done. Sign in to continue, or create an account in a few seconds.</p>
+            <div class="actions">
+                <a href="/register" class="btn primary">Get started</a>
+                <a href="/login" class="btn ghost">Log in</a>
+            </div>
+
+            <div class="mock">
+                <div class="mock-in">
+                    <div class="dots"><span></span><span></span><span></span></div>
+                    <div class="stats">
+                        <div class="stat"><small>Active</small><strong>128</strong></div>
+                        <div class="stat"><small>Completed</small><strong>1,024</strong></div>
+                        <div class="stat"><small>Pending</small><strong>16</strong></div>
+                    </div>
+                    <div class="bar"><i style="width: 78%"></i></div>
+                    <div class="bar"><i style="width: 52%"></i></div>
+                </div>
+            </div>
+        </main>
+
+        <section class="grid">
+            <div class="card"><div class="icon">&#9889;</div><h3>Fast setup</h3><p>Up and running in minutes with sensible defaults.</p></div>
+            <div class="card"><div class="icon">&#128274;</div><h3>Secure by design</h3><p>Authentication and protection built in from day one.</p></div>
+            <div class="card"><div class="icon">&#128241;</div><h3>Works everywhere</h3><p>Crisp on phones, tablets, and large desktop screens.</p></div>
+        </section>
+
+        <footer>&copy; 2026 My App. All rights reserved.</footer>
+    </div>
+</body>
+</html>
