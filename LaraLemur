@@ -1,1 +1,84 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            min-height: 100vh; color: #000; line-height: 1.45;
+            font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: #fde047;
+            background-image: radial-gradient(rgba(0,0,0,.18) 1.5px, transparent 1.5px);
+            background-size: 22px 22px;
+        }
+        .wrap { max-width: 1040px; margin: 0 auto; padding: 24px 20px 40px; }
+        header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+                 background: #fff; border: 4px solid #000; box-shadow: 6px 6px 0 #000; padding: 12px 20px; }
+        .brand { font-weight: 900; font-size: 1.5rem; text-transform: uppercase; letter-spacing: -.02em; color: #000; text-decoration: none; }
+        .brand b { color: #ec4899; }
+        nav { display: flex; align-items: center; gap: 14px; font-weight: 800; text-transform: uppercase; font-size: .85rem; }
+        nav a { color: #000; text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 4px; }
+        nav a.btn { text-decoration: none; background: #f472b6; border: 4px solid #000; padding: 6px 16px; box-shadow: 3px 3px 0 #000; }
+        .layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; margin-top: 38px; }
+        .hero { position: relative; background: #fff; border: 4px solid #000; box-shadow: 12px 12px 0 #000; padding: 36px 30px; }
+        .sticker { position: absolute; top: -26px; right: -10px; width: 92px; height: 92px; border-radius: 50%; background: #67e8f9;
+                   border: 4px solid #000; box-shadow: 4px 4px 0 #000; display: grid; place-items: center; text-align: center;
+                   font-weight: 900; font-size: .72rem; text-transform: uppercase; line-height: 1.1; transform: rotate(10deg); }
+        .hello { display: inline-block; background: #67e8f9; border: 4px solid #000; padding: 4px 12px; font-weight: 900; font-size: .75rem;
+                 text-transform: uppercase; transform: rotate(-2deg); box-shadow: 3px 3px 0 #000; }
+        h1 { font-size: clamp(2.6rem, 8vw, 4.8rem); line-height: .95; font-weight: 900; text-transform: uppercase; letter-spacing: -.04em; margin: 24px 0 20px; }
+        h1 span { display: inline-block; background: #f472b6; border: 4px solid #000; padding: 0 12px; box-shadow: 5px 5px 0 #000; transform: rotate(-1deg); }
+        .lead { max-width: 420px; font-size: 1.1rem; font-weight: 600; }
+        .actions { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 30px; }
+        .big { display: inline-block; text-decoration: none; color: #000; font-weight: 900; text-transform: uppercase; font-size: 1.05rem;
+               padding: 14px 26px; border: 4px solid #000; box-shadow: 6px 6px 0 #000; }
+        .big:hover { transform: translate(4px, 4px); box-shadow: 2px 2px 0 #000; }
+        .lime { background: #a3e635; } .white { background: #fff; }
+        .side { display: flex; flex-direction: column; gap: 24px; }
+        .tile { border: 4px solid #000; box-shadow: 8px 8px 0 #000; padding: 22px; }
+        .tile h3 { font-size: 1.9rem; font-weight: 900; text-transform: uppercase; letter-spacing: -.03em; display: flex; justify-content: space-between; align-items: center; }
+        .tile h3 em { font-style: normal; font-size: 1rem; background: #fff; border: 4px solid #000; width: 38px; height: 38px; display: grid; place-items: center; }
+        .tile p { font-weight: 700; margin-top: 4px; }
+        .t1 { background: #67e8f9; transform: rotate(1deg); } .t2 { background: #f472b6; transform: rotate(-1deg); } .t3 { background: #a3e635; transform: rotate(1deg); }
+        .strip { margin-top: 44px; background: #000; color: #fde047; border: 4px solid #000; box-shadow: 6px 6px 0 #ec4899; padding: 12px 18px;
+                 text-align: center; font-weight: 900; text-transform: uppercase; letter-spacing: .06em; transform: rotate(-1deg); }
+        footer { margin-top: 36px; text-align: center; font-weight: 800; text-transform: uppercase; font-size: .8rem; }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <header>
+            <a href="/" class="brand">My App<b>.</b></a>
+            <nav>
+                <a href="/login">Log in</a>
+                <a href="/register" class="btn">Register</a>
+            </nav>
+        </header>
+
+        <main class="layout">
+            <section class="hero">
+                <div class="sticker">Free<br>to join!</div>
+                <span class="hello">Hello there!</span>
+                <h1>Make it<br><span>loud.</span><br>Make it yours.</h1>
+                <p class="lead">No boring corporate vibes. Jump in, sign up, and start building something with real personality.</p>
+                <div class="actions">
+                    <a href="/register" class="big lime">Get started &rarr;</a>
+                    <a href="/login" class="big white">Log in</a>
+                </div>
+            </section>
+
+            <aside class="side">
+                <div class="tile t1"><h3>Fast <em>01</em></h3><p>Quick to set up. Zero fuss.</p></div>
+                <div class="tile t2"><h3>Secure <em>02</em></h3><p>Auth built right in.</p></div>
+                <div class="tile t3"><h3>Responsive <em>03</em></h3><p>Any screen. No sweat.</p></div>
+            </aside>
+        </main>
+
+        <div class="strip">Fast &#9733; Secure &#9733; Responsive &#9733; Yours &#9733; My App</div>
+        <footer>&copy; 2026 My App</footer>
+    </div>
+</body>
+</html>
